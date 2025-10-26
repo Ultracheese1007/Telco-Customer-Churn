@@ -94,7 +94,7 @@ A fully Dockerized **FastAPI + Streamlit** application that predicts customer ch
 
 ```
 
-## 🐳 Run Locally with Docker
+## 🐳 Run with Docker
 
 ### 1️⃣ Clean and Rebuild Everything
 ```bash
