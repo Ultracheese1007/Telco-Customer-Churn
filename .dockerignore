@@ -1,0 +1,42 @@
+# -----------------------------
+# 📦 Version control
+# -----------------------------
+.git
+.gitignore
+
+# -----------------------------
+# 🐍 Python cache / build artifacts
+# -----------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info
+*.egg
+build/
+dist/
+
+# -----------------------------
+# 🧪 Virtual environments
+# -----------------------------
+venv/
+.env/
+
+# -----------------------------
+# 💻 Local / system files
+# -----------------------------
+.DS_Store
+*.log
+
+# -----------------------------
+# ⚙️ IDE / editor configs
+# -----------------------------
+.vscode/
+.idea/
+
+# -----------------------------
+# 🧹 Safe exclusions (keep full project reproducible)
+# -----------------------------
+models/__pycache__/
+tests/__pycache__/
+src/__pycache__/
