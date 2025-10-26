@@ -11,7 +11,8 @@ import warnings
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+# src/utils.py
+import os
 
 def setup_environment():
     """
@@ -64,3 +65,14 @@ def show_missing_heatmap(df: pd.DataFrame, cmap: str = 'magma'):
     sns.heatmap(df.isnull(), cmap=cmap, cbar=False)
     plt.title("Missing Values Heatmap")
     plt.show()
+
+
+
+def ensure_dir(path: str):
+    """Create folder if not exists."""
+    os.makedirs(path, exist_ok=True)
+
+def save_fig(fig, folder, filename):
+    """Save figure to path safely."""
+    ensure_dir(folder)
+    fig.savefig(os.path.join(folder, filename), bbox_inches="tight", dpi=300)
