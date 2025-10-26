@@ -10,3 +10,4 @@ imbalanced-learn
 fastapi
 uvicorn
 streamlit
+pytest

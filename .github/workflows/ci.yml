@@ -44,7 +44,7 @@ jobs:
           docker compose -f docker/docker-compose.yml up -d
           sleep 10  # Wait for containers to start
           docker ps
-
+git add .github/workflows/ci.yml
 
       # 7️⃣ Health checks (ensure both services are running)
       - name: Test FastAPI health endpoint

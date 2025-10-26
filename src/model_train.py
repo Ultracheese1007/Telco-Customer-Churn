@@ -1,4 +1,14 @@
-# src/model_train.py
+"""
+model_train.py
+--------------
+Model training module for the Telco Customer Churn project.
+
+This module provides:
+1. A lightweight `train_model()` for pytest validation
+2. Baseline RandomForest training
+3. Tuned RandomForest and XGBoost training with cross-validation
+"""
+
 import os
 import joblib
 import numpy as np
@@ -14,6 +24,29 @@ from xgboost import XGBClassifier
 from src.utils import ensure_dir
 
 
+# ============================================================
+# 0. Minimal model for test (pytest will call this)
+# ============================================================
+def train_model(df, output_path=None):
+    """
+    Train a simple RandomForest model for testing.
+    Used by pytest to verify the training pipeline.
+    """
+    X = df.drop(columns=["Churn"])
+    y = df["Churn"].apply(lambda x: 1 if x == "Yes" else 0)
+
+    model = RandomForestClassifier(n_estimators=10, random_state=42)
+    model.fit(X.select_dtypes("number"), y)
+
+    if output_path:
+        joblib.dump(model, output_path)
+        print(f"✅ Model saved to {output_path}")
+    return model
+
+
+# ============================================================
+# 1. Baseline RandomForest
+# ============================================================
 def train_baseline_rf(x, y, save_path="models/baseline_rf.pkl"):
     """
     Train a baseline Random Forest model with cross-validation.
@@ -42,10 +75,13 @@ def train_baseline_rf(x, y, save_path="models/baseline_rf.pkl"):
     return clf, (x_train, x_test, y_train, y_test)
 
 
+# ============================================================
+# 2. Tuned XGBoost
+# ============================================================
 def train_xgboost_tuned(x, y, save_path="models/best_xgb.pkl"):
     """
     Perform grid search tuning for XGBoost.
-    Returns model and (x_train, x_test, y_train, y_test)
+    Returns best model and (x_train, x_test, y_train, y_test)
     """
     x_train, x_test, y_train, y_test = train_test_split(
         x, y, test_size=0.2, random_state=42, stratify=y
@@ -86,6 +122,9 @@ def train_xgboost_tuned(x, y, save_path="models/best_xgb.pkl"):
     return best_model, (x_train, x_test, y_train, y_test)
 
 
+# ============================================================
+# 3. Tuned RandomForest
+# ============================================================
 def train_rf_tuned(x_train, y_train):
     """
     Perform random search tuning for RandomForest.
