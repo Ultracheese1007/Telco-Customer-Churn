@@ -135,6 +135,6 @@ It predicts churn probability (churn_probability) given key customer features su
 Streamlit automatically displays all `.png` visualizations found in `reports/eda_results/`,including churn distribution, correlation heatmaps, and boxplots.
 
 ## 👩‍💻 Author
-Developed by Xinmei Ma (Leah)
-Data Science & Society MSc — Tilburg University
+- Developed by Xinmei Ma (Leah)
+- Data Science & Society MSc — Tilburg University
 
