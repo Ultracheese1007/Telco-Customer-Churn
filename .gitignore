@@ -34,7 +34,13 @@ telco/
 # ======================
 # Data and reports
 # ======================
-data/raw/
+# Ignore generated files but keep raw and processed CSVs
+data/raw/*
+!data/raw/Telco-Customer-Churn.csv
+data/processed/*
+!data/processed/*.csv
+
+# Ignore visualization outputs (can be regenerated)
 reports/eda_results/*.png
 reports/eda_results/*.html
 reports/eda_results/*.pdf
