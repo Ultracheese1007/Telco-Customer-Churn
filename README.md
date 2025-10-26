@@ -136,5 +136,5 @@ Streamlit automatically displays all `.png` visualizations found in `reports/eda
 
 ## 👩‍💻 Author
 - Developed by Xinmei Ma (Leah)
-- Data Science & Society MSc — Tilburg University
+- MSc Data Science & Society  — Tilburg University
 
