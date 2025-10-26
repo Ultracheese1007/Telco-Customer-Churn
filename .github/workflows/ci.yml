@@ -30,14 +30,22 @@ jobs:
         run: |
           docker build -f docker/Dockerfile.app -t telco-app:ci .
 
-      # 5️⃣ Start both containers using Docker Compose
+      # 5️⃣ Inject temporary environment variables for CI
+      - name: Create environment files for CI
+        run: |
+          mkdir -p docker/env
+          echo "MODEL_PATH=models/best_xgb.pkl" > docker/env/api.env
+          echo "API_URL=http://telco-api:8000/api/predict" > docker/env/app.env
+          echo "APP_PORT=8501" >> docker/env/app.env
+
+      # 6️⃣ Start both containers using Docker Compose
       - name: Run Docker Compose for test
         run: |
           docker compose -f docker/docker-compose.yml up -d
           sleep 10  # Wait for containers to start
           docker ps
 
-      # 6️⃣ Health checks (ensure both services are running)
+      # 7️⃣ Health checks (ensure both services are running)
       - name: Test FastAPI health endpoint
         run: |
           curl -f http://localhost:8000/api/healthcheck || exit 1
@@ -46,7 +54,7 @@ jobs:
         run: |
           curl -f http://localhost:8501 || exit 1
 
-      # 7️⃣ Cleanup (stop and remove all containers)
+      # 8️⃣ Cleanup (stop and remove all containers)
       - name: Stop and remove containers
         if: always()
         run: docker compose -f docker/docker-compose.yml down
