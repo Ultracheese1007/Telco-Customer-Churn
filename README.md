@@ -15,7 +15,7 @@ A fully Dockerized **FastAPI + Streamlit** application that predicts customer ch
 ---
 
 ## 🏗️ Project Structure
-
+```
 ├── LICENSE
 ├── Makefile
 ├── README.md 
