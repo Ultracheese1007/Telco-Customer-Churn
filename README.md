@@ -16,9 +16,6 @@ A fully Dockerized **FastAPI + Streamlit** application that predicts customer ch
 
 ## 🏗️ Project Structure
 
-
-```
-.
 ├── LICENSE
 ├── Makefile
 ├── README.md 
@@ -105,7 +102,6 @@ docker stop $(docker ps -aq) 2>/dev/null || true
 docker rm -f $(docker ps -aq) 2>/dev/null || true
 docker network rm telco-net 2>/dev/null || true
 docker network create telco-net
-```
 
 
 ### 2️⃣ Build Images
