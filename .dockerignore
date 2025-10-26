@@ -3,6 +3,9 @@
 # -----------------------------
 .git
 .gitignore
+docker-compose.yml
+Makefile
+LICENSE
 
 # -----------------------------
 # 🐍 Python cache / build artifacts
@@ -21,22 +24,44 @@ dist/
 # -----------------------------
 venv/
 .env/
+.env.example
+.env.template
 
 # -----------------------------
 # 💻 Local / system files
 # -----------------------------
 .DS_Store
 *.log
+*.sqlite3
+*.db
 
 # -----------------------------
 # ⚙️ IDE / editor configs
 # -----------------------------
 .vscode/
 .idea/
+.ipynb_checkpoints/
 
 # -----------------------------
-# 🧹 Safe exclusions (keep full project reproducible)
+# 🧹 Safe exclusions (keep reproducibility)
 # -----------------------------
-models/__pycache__/
-tests/__pycache__/
-src/__pycache__/
+# Raw data (too large to include in image)
+data/raw/
+
+# Keep processed or encoded data files for reproducibility
+!data/processed/
+
+# Model files: keep only the best model for deployment
+models/
+!models/best_xgb.pkl
+
+# Tests are not needed in deployment
+tests/
+
+# Reports: keep key EDA images and summary HTML for the Streamlit dashboard
+reports/
+!reports/eda_results/
+!reports/eda_summary.html
+
+# Notebooks and temporary files
+reports/tmp/

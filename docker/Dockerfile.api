@@ -13,7 +13,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy source code and model files into the container
 COPY ./src ./src
 COPY ./models ./models
-COPY ./tests ./tests
+
 
 
 # Environment variables

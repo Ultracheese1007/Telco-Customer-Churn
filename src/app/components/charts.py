@@ -1,21 +1,45 @@
 # src/app/components/charts.py
+"""
+📊 Charts Component for Telco Customer Churn Dashboard
+-------------------------------------------------------
+This module automatically loads and displays all EDA result images
+from the reports/eda_results folder, ensuring compatibility both
+locally and inside Docker containers.
+"""
+
 import streamlit as st
-import os
+from pathlib import Path
+
 
 def display_eda_charts():
-    """Display key EDA images from the reports directory."""
-    eda_dir = "reports/eda_results"
+    """
+    Automatically load and display all EDA result images 
+    from /app/reports/eda_results (in Docker) or reports/eda_results (locally).
+    """
 
-    charts = {
-        "Customer Churn Overview": "overview_churn_pie.png",
-        "Gender vs Churn": "categorical_gender_vs_churn.png",
-        "Total Charges Distribution": "numerical_totalcharges_box.png",
-        "Feature Correlation Heatmap": "correlation_heatmap.png"
-    }
+    # --- Determine base directory ---
+    # When running in Docker, /app is the WORKDIR
+    possible_paths = [
+        Path("/app/reports/eda_results"),   # Docker path
+        Path("reports/eda_results")         # Local dev path
+    ]
 
-    for title, filename in charts.items():
-        file_path = os.path.join(eda_dir, filename)
-        if os.path.exists(file_path):
-            st.image(file_path, caption=title, use_container_width=True)
-        else:
-            st.warning(f"⚠️ Missing: {filename}")
+    # Choose the first existing directory
+    eda_dir = next((p for p in possible_paths if p.exists()), None)
+
+    if not eda_dir:
+        st.error("❌ EDA results folder not found. Expected at /app/reports/eda_results or reports/eda_results.")
+        return
+
+    # --- Find and display all .png images ---
+    img_files = sorted(eda_dir.glob("*.png"))
+    if not img_files:
+        st.warning("⚠️ No EDA plots found in reports/eda_results.")
+        return
+
+    st.markdown("### 🔍 Exploratory Data Analysis Results")
+
+    for img_path in img_files:
+        # Generate readable caption from file name
+        caption = img_path.stem.replace("_", " ").title()
+        st.image(str(img_path), caption=caption, use_container_width=True)
