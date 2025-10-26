@@ -17,7 +17,7 @@ A fully Dockerized **FastAPI + Streamlit** application that predicts customer ch
 ## 🏗️ Project Structure
 
 
-```bash
+```
 .
 ├── LICENSE
 ├── Makefile
@@ -136,8 +136,7 @@ It predicts churn probability (churn_probability) given key customer features su
 - Dependents
 
 ## 📊 Exploratory Data Analysis (EDA)
-Streamlit automatically displays all .png visualizations found in reports/eda_results/,
-including churn distribution, correlation heatmaps, and boxplots.
+Streamlit automatically displays all `.png` visualizations found in `reports/eda_results/`,including churn distribution, correlation heatmaps, and boxplots.
 
 ## 👩‍💻 Author
 Developed by Xinmei Ma (Leah)
