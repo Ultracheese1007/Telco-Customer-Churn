@@ -45,10 +45,12 @@ jobs:
           sleep 10  # Wait for containers to start
           docker ps
 
+
       # 7️⃣ Health checks (ensure both services are running)
       - name: Test FastAPI health endpoint
         run: |
-          curl -f http://localhost:8000/api/healthcheck || exit 1
+          curl -f http://localhost:8000/api/health || exit 1
+
 
       - name: Test Streamlit app port
         run: |
