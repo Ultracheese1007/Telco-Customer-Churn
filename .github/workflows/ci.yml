@@ -1,0 +1,52 @@
+name: 🚀 CI Pipeline - Telco Churn
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    name: 🧱 Build & Test Docker Images
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2️⃣ Set up Docker Buildx (for multi-architecture builds)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # 3️⃣ Build the FastAPI image
+      - name: Build FastAPI image
+        run: |
+          docker build -f docker/Dockerfile.api -t telco-api:ci .
+
+      # 4️⃣ Build the Streamlit image
+      - name: Build Streamlit image
+        run: |
+          docker build -f docker/Dockerfile.app -t telco-app:ci .
+
+      # 5️⃣ Start both containers using Docker Compose
+      - name: Run Docker Compose for test
+        run: |
+          docker compose -f docker/docker-compose.yml up -d
+          sleep 10  # Wait for containers to start
+          docker ps
+
+      # 6️⃣ Health checks (ensure both services are running)
+      - name: Test FastAPI health endpoint
+        run: |
+          curl -f http://localhost:8000/api/healthcheck || exit 1
+
+      - name: Test Streamlit app port
+        run: |
+          curl -f http://localhost:8501 || exit 1
+
+      # 7️⃣ Cleanup (stop and remove all containers)
+      - name: Stop and remove containers
+        if: always()
+        run: docker compose -f docker/docker-compose.yml down
