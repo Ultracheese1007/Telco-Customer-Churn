@@ -1,0 +1,35 @@
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.api
+    container_name: telco-api
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./env/api.env
+    volumes:
+      - ../models:/app/models
+      - ../data:/app/data
+    restart: always
+    networks:
+      - telco-net         # ✅ Use the same network so other containers can reach this API
+
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.app
+    container_name: telco-app
+    ports:
+      - "8501:8501"
+    env_file:
+      - ./env/app.env
+    depends_on:
+      - api
+    restart: always
+    networks:
+      - telco-net         # ✅ Join the same network so Streamlit can call http://telco-api:8000
+
+networks:
+  telco-net:                # ✅ Define a dedicated bridge network to ensure stable name resolution
+    driver: bridge

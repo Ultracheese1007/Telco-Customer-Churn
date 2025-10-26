@@ -1,0 +1,19 @@
+# docker/.dockerignore
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.log
+*.csv
+*.rds
+.ipynb_checkpoints/
+.vscode/
+.env
+data/raw/*
+reports/*
+models/*.joblib
+models/*.pkl
+tests/
+notebooks/

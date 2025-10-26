@@ -1,0 +1,24 @@
+# docker/Dockerfile.api
+FROM python:3.11-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy dependency file
+COPY requirements.txt .
+
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy source code and model files into the container
+COPY ./src ./src
+COPY ./models ./models
+
+# Environment variables
+ENV MODEL_PATH=models/best_xgb.pkl
+
+# Expose FastAPI port
+EXPOSE 8000
+
+# Launch FastAPI application
+CMD ["uvicorn", "src.api.main:app", "--host", "0.0.0.0", "--port", "8000"]
