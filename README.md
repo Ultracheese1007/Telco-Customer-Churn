@@ -1,16 +1,18 @@
 # 🧠 Telco Customer Churn 
 
-A fully Dockerized **FastAPI + Streamlit** application that predicts customer churn using a trained ML model and provides rich exploratory data analysis (EDA) visualizations.
+A fully **Dockerized FastAPI + Streamlit** system that predicts customer churn using a trained ML model and provides automated exploratory data analysis (EDA) visualizations.  
+This project demonstrates an engineering-based approach to applied data science, emphasizing reproducibility, automation, and clear modular design for maintainability.
 
 ---
 
 ## 🚀 Features
 
-- 🧩 **FastAPI Backend** — serves churn prediction using a trained XGBoost model (`best_xgb.pkl`)
-- 📊 **Streamlit Frontend** — interactive dashboard for customer churn prediction & EDA visualization
-- 🐳 **Dockerized Architecture** — separate containers for API & App connected via custom Docker network
-- 📈 **Reproducible Reports** — auto-generated EDA plots in `/reports/eda_results/`
-- ⚙️ **Configurable via `.env`** — set `API_URL` and model path easily
+- 🧩 **FastAPI Backend** — serves churn prediction through a tuned XGBoost model (`best_xgb.pkl`)
+- 📊 **Streamlit Frontend** — interactive dashboard for prediction and EDA visualization
+- 🐳 **Containerized Architecture** — isolated API & App services connected via custom Docker network
+- 📈 **Reproducible Pipeline** — automated data preprocessing, model training, and EDA report generation
+- ⚙️ **Environment Configurable** — `.env` files for flexible setup (`API_URL`, model path, etc.)
+- 🔁 **CI/CD & Testing Ready** — includes test scripts (`pytest`) and structured Makefile for automation
 
 ---
 
@@ -120,6 +122,14 @@ docker run -d --name telco-app --network telco-net -p 8501:8501 churn-app
 
 - ⚙️ FastAPI docs: http://localhost:8000/docs
 
+## 🧪 Automated Testing
+Run automated unit tests inside the Docker environment:
+
+```bash
+# Run tests within the container
+docker run --rm churn-api pytest tests/ -v
+```
+
 ## 🧠 Model Overview
 The backend uses a tuned XGBoost classifier trained on Telco churn data.
 It predicts churn probability (churn_probability) given key customer features such as:
@@ -131,8 +141,18 @@ It predicts churn probability (churn_probability) given key customer features su
 - Partner
 - Dependents
 
+
 ## 📊 Exploratory Data Analysis (EDA)
-Streamlit automatically displays all `.png` visualizations found in `reports/eda_results/`,including churn distribution, correlation heatmaps, and boxplots.
+All `.png` visualizations found in `reports/eda_results/` are automatically displayed in Streamlit,
+including:
+- Customer churn distribution
+
+- Numerical feature distributions
+
+- Correlation heatmaps
+
+- Boxplots of key variables
+  
 
 ## 👩‍💻 Author
 - Developed by Xinmei Ma (Leah)
